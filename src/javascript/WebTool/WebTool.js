@@ -273,7 +273,7 @@ function panelcreate() {
             value: 'This webtool shows trends in urban greenery and land ' +
             'surface temperature in the San Francisco Bay Area between 1990 ' +
             'and 2020. It also illustrates spatial relationships with ' +
-            'socioeconomic indicators such as housing prices and migration.'                 
+            'socioeconomic indicators such as housing prices and displacement risk.'                 
             ,
             style: {
                 fontSize: '.9vw',
@@ -465,17 +465,9 @@ var dataInfo = {
             opacity: 0.7
         }
     },
-    'ndv_hgh': {
-      name: 'Greenness & high-income move-in rate',
-      desc: 'Census tract greenness (2019) compared to average high-income move-in rate (2017-2019) at the census tract level',
-      img: tracts,
-      type: 'vec',
-      style: color_dict,
-      vis: color_pal
-    },  
-    'ndvi_lw': {
-      name: 'Greenness & low-income move-out rate',
-      desc: 'Census tract greenness (2019) compared to average low-income move-out rate (2017-2019) at the census tract level',
+    'ndvi_dr': {
+      name: 'Greenness & displacement risk',
+      desc: 'Census tract greenness compared to displacement risk in 2019 at the census tract level',
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -489,22 +481,14 @@ var dataInfo = {
       style: color_dict,
       vis: color_pal
     },
-   'lst_hgh': {
-      name: 'Land surface temperature & high-income move-in rate',
-      desc: 'Census tract land surface temperature (2019) compared to average high-income move-in rate (2017-2019) at the census tract level',
+   'lst_dr': {
+      name: 'Land surface temperature & displacement risk',
+      desc: 'Land surface temperature (2019) compared to compared to displacement risk in 2019 at the census tract level',
       img: tracts,
       type: 'vec',
       style: color_dict,
       vis: color_pal
-    },
-   'lst_low': {
-      name: 'Land surface temperature & low-income move-out rate',
-      desc: 'Census tract land surface temperature (2019) compared to average low-income move-out rate (2017-2019) at the census tract level',
-      img: tracts,
-      type: 'vec',
-      style: color_dict,
-      vis: color_pal
-    },
+    },  
    'lst_soc': {
       name: 'Land surface temperature & social vulnerability',
       desc: 'Land surface temperature (2019) compared to level of social vulnerability (2018) at the census tract level',
@@ -513,22 +497,14 @@ var dataInfo = {
       style: color_dict,
       vis: color_pal
     },
-   'pctgreen_hgh': {
-      name: 'Percent green space & high-income move-in rate',
-      desc: 'Share of tract that is green space (2019) compared to average high-income move-in rate (2017-2019) at the census tract level',
+   'pctgreen_dr': {
+      name: 'Percent green space & displacement risk',
+      desc: 'Share of tract that is green space compared to displacement risk in 2019 at the census tract level',
       img: tracts,
       type: 'vec',
       style: color_dict,
       vis: color_pal
-    },
-   'pctgreen_low': {
-      name: 'Percent green space & low-income move-out rate',
-      desc: 'Share of tract that is green space (2019) compared to average low-income move-out rate (2017-2019) at the census tract level',
-      img: tracts,
-      type: 'vec',
-      style: color_dict,
-      vis: color_pal
-    },    
+    },  
    'pctgreen_soc': {
       name: 'Percent green space & social vulnerability',
       desc: 'Share of tract that is green space (2019) compared to level of social vulnerability (2018) at the census tract level',
@@ -1002,37 +978,25 @@ function redraw(layer) {
         legendPanel.add(rowPanel);
       }   
     
-    if (layer == 'ndv_hgh') {
-        var lab1 = 'Greenness'
-        var lab2 = 'High-income\n   move-in rate'  
-        
-    } else if (layer == 'ndvi_lw') {
-        var lab1 = 'Greenness'
-        var lab2 = 'Low-income\n   move-out rate'    
+    if (layer == 'ndv_dr') {
+      var lab1 = 'Greenness'
+      var lab2 = 'Displacement\n   risk' 
       
     } else if (layer == 'ndvi_sc') {
         var lab1 = 'Greenness'
-        var lab2 = 'Social\n   vulnerability'      
-        
-    } else if (layer == 'lst_hgh') {
+        var lab2 = 'Social\n   vulnerability'  
+    
+    } else if (layer == 'lst_dr') {
         var lab1 = 'Land surface\n     temperature'
-        var lab2 = 'High-income\n   move-in rate'  
-        
-    } else if (layer == 'lst_low') {
-        var lab1 = 'Land surface\n     temperature'
-        var lab2 = 'Low-income\n   move-out rate'        
+        var lab2 = 'Displacement\n   risk'      
     
     } else if (layer == 'lst_soc') {
         var lab1 = 'Land surface\n     temperature'
         var lab2 = 'Social\n   vulnerability'
-        
-    } else if (layer == 'pctgreen_hgh') {
+    
+    } else if (layer == 'pctgreen_dr') {
         var lab1 = 'Percent\n     green space'
-        var lab2 = 'High-income\n   move-in rate'
-        
-    } else if (layer == 'pctgreen_low') {
-        var lab1 = 'Percent\n     green space'
-        var lab2 = 'Low-income\n   move-out rate'
+        var lab2 = 'Displacement\n   risk'    
         
     } else if (layer == 'pctgreen_soc') {
         var lab1 = 'Percent\n     green space'
@@ -1129,46 +1093,31 @@ function redraw(layer) {
           makeLegendVec(info.vis);
           var visImg = info.img;
           
-          if (layer == 'ndv_hgh') {
+          if (layer == 'ndvi_dr') {
             
             var visImg = visImg.map(function(feature){
-              return feature.set('style', info.style.get(feature.get('nh')))
-            });
-            
-          } else if (layer == 'ndvi_lw') {
-            var visImg = visImg.map(function(feature){
-              return feature.set('style', info.style.get(feature.get('nl')))
-            });  
+              return feature.set('style', info.style.get(feature.get('ne')))
+            });      
           
           } else if (layer == 'ndvi_sc') {
             var visImg = visImg.map(function(feature){
               return feature.set('style', info.style.get(feature.get('ns')))
-            });         
+            });   
             
-          } else if (layer == 'lst_hgh') {
+          } else if (layer == 'lst_dr') {
             var visImg = visImg.map(function(feature){
-              return feature.set('style', info.style.get(feature.get('lh')))
-            });  
-            
-          } else if (layer == 'lst_low') {
-            var visImg = visImg.map(function(feature){
-              return feature.set('style', info.style.get(feature.get('ll')))
-            });
+              return feature.set('style', info.style.get(feature.get('le')))
+            });   
             
           } else if (layer == 'lst_soc') {
             var visImg = visImg.map(function(feature){
               return feature.set('style', info.style.get(feature.get('ls')))
             });
-            
-          } else if (layer == 'pctgreen_hgh') {
+          
+          } else if (layer == 'pctgreen_dr') {
             var visImg = visImg.map(function(feature){
-              return feature.set('style', info.style.get(feature.get('gh')))
-            });   
-            
-          } else if (layer == 'pctgreen_low') {
-            var visImg = visImg.map(function(feature){
-              return feature.set('style', info.style.get(feature.get('gl')))
-            });   
+              return feature.set('style', info.style.get(feature.get('ge')))
+            });            
             
           } else if (layer == 'pctgreen_soc') {
             var visImg = visImg.map(function(feature){
