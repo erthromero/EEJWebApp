@@ -978,7 +978,7 @@ function redraw(layer) {
         legendPanel.add(rowPanel);
       }   
     
-    if (layer == 'ndv_dr') {
+    if (layer == 'ndvi_dr') {
       var lab1 = 'Greenness'
       var lab2 = 'Displacement\n   risk' 
       
