@@ -515,7 +515,7 @@ var dataInfo = {
     },
    'lst_pricechange': {
       name: 'Land surface temperature trend & housing price trend',
-      desc: 'Rate of change in land surface temperature (2000 - 2019) & percent change in yearly average housing price (2000 - 2020) at the zip code level',
+      desc: 'Rate of change in land surface temperature (1990 - 2019) & percent change in yearly average housing price (2000 - 2020) at the zip code level',
       img: zips,
       type: 'vec',
       style: color_dict,
@@ -523,7 +523,7 @@ var dataInfo = {
     },
    'ndvi_pricechange': {
       name: 'Greenness trend & housing price trend',
-      desc: 'Rate of change in greenness (2000 - 2019) & percent change in yearly average housing price (2000 - 2020) at the zip code level',
+      desc: 'Rate of change in greenness (1990 - 2019) & percent change in yearly average housing price (2000 - 2020) at the zip code level',
       img: zips,
       type: 'vec',
       style: color_dict,
