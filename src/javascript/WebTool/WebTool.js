@@ -262,7 +262,7 @@ var inspector = ui.Panel({
 });
 
 // Create a widget panel for the display chart
-var widget1 = ui.Panel({style: {position: 'bottom-right'}}); 
+var widget1 = ui.Panel({style: {position: 'bottom-left'}}); 
 
 // Add a label to the panel.
 inspector.add(
@@ -457,13 +457,13 @@ var dataInfo = {
 // Register a callback on the default map to be invoked when the map is clicked.
 var ImClick =  function(coords) {
     // Clear the main panel.
-    panel.clear();
+    widget1.clear();
 
     // Call the panel creation function again.
-    panelcreate();
+    // panelcreate();
 
     // Call the reference panel creation function again.
-    referencecreate();
+    // referencecreate();
 
     // Create panels to hold lon/lat and UHI values.
     var gap = ui.Label(' ');
@@ -651,7 +651,7 @@ var ImClick =  function(coords) {
 
         // Add the chart to the panel.
         widget1.clear();
-        widget1.style().set({position: 'bottom-right', width: '320px'});
+        widget1.style().set({position: 'bottom-left', width: '400px'});
         widget1.add(NDVILSTChart);
         
         // Add panels to show longitude, latitude, and pixel values to the main panel.
@@ -661,10 +661,57 @@ var ImClick =  function(coords) {
         widget1.add(ui.Panel([ndviIntPix], ui.Panel.Layout.flow('horizontal')));
         widget1.add(ui.Panel([ndviPvalPix], ui.Panel.Layout.flow('horizontal')));
         
+        // Create a close button
+        var closeButton = ui.Button({
+          label: 'Close',
+          onClick: function() {
+            // Remove the chart panel when the close button is clicked
+            widget1.clear();
+            widget1.style().set({width: '1px'});
+          }
+        });
+        
+        // Create a panel to hold the close button
+        var buttonPanel = ui.Panel({
+          widgets: [closeButton],
+          style: {
+            position: 'bottom-right',
+            padding: '1px 1px 1px 300px' 
+          }
+        });
+  
+        // Add the close button to the chart panel
+        widget1.add(buttonPanel);
+    
 
     } else {
+        
         // Add a blank label widget if there is no data.
         map.widgets().set(10, ui.Label());
+        
+        // Create a close button
+        var closeButton = ui.Button({
+          label: 'Close',
+          onClick: function() {
+            // Remove the chart panel when the close button is clicked
+            widget1.clear();
+            widget1.style().set({width: '1px'});
+          }
+        });
+        
+        // Create a panel to hold the close button
+        var buttonPanel = ui.Panel({
+          widgets: [closeButton],
+          style: {
+            position: 'bottom-right',
+            padding: '1px 1px 1px 300px' 
+          }
+        });
+  
+        // Add the close button to the chart panel
+        widget1.add(buttonPanel);
+        
+        
     }
 
     // Clear inspector again and display a new label.
