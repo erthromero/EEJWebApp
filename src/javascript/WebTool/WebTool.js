@@ -256,91 +256,6 @@ map.style().set('cursor', 'crosshair');
 // Set the center and zoom level of the new map.
 map.setCenter(-122.355537, 37.828, 9);
 
-
-// Function to create the intro panel with labels.
-function panelcreate() {
-    // Create an intro panel with labels.
-    var intro = ui.Panel([
-        ui.Label({
-            value: 'Where the Grass Grows Greener: The Impacts of ' +
-            'Urban Greening on Housing Prices and Neighborhood Stability',
-            style: {
-                fontSize: '1vw',
-                fontWeight: 'bold'
-            },
-        }),
-        ui.Label({
-            value: 'This webtool shows trends in urban greenery and land ' +
-            'surface temperature in the San Francisco Bay Area between 1990 ' +
-            'and 2020. It also illustrates spatial relationships with ' +
-            'socioeconomic indicators such as housing prices and displacement risk.'                 
-            ,
-            style: {
-                fontSize: '.9vw',
-                fontWeight: 'normal'
-            },
-        }),
-    ]);
-
-    // Add intro panel to the main panel.
-    panel.add(intro);
-}
-
-// Create main panel.
-var panel = ui.Panel();
-
-// Set the width and font style for the main panel.
-panel.style().set({
-    width: '15%',
-    fontSize: '1vw',
-    fontWeight: 'bold'
-});
-
-// Add the main panel to the UI root.
-ui.root.insert(1, panel);
-
-// Call the panelcreate function to create the intro panel.
-panelcreate();
-
-// Function to create reference panel.
-function referencecreate() {
-    var reference1 = ui.Label({
-        value: 'Click here to read more about the data and our methodology.',
-        // Methodology doc: https://docs.google.com/document/d/1z7E5YeSs4yCnBf2y1_TTxLfbIHANdyLbcvNwNI6V3WA/edit
-        style: {
-            color: 'black',
-            fontSize: '.9vw',
-            fontWeight: 'bold',
-            textAlign: 'left'
-        },
-        targetUrl: 'https://github.com/erthromero/EEJWebApp'
-    });   
-    var reference2 = ui.Label({
-        value: 'Created by Eric Romero and Julia Greenberg',
-        style: {
-            color: 'black',
-            fontSize: '.8vw',
-            fontWeight: 'bold',
-            textAlign: 'left'
-        },
-        
-    });
-    var reference3 = ui.Label({
-        value: 'Funding from the NASA Equity and Environmental Justice program, Data Integration Project, grant no. 80NSSC22K1699',
-        style: {
-            color: 'black',
-            fontSize: '.8vw',
-            textAlign: 'left'
-        },
-    });
-    panel.add(reference1);
-    panel.add(reference2);
-    panel.add(reference3);
-}
-
-// Call the reference panel creation function.
-referencecreate();
-
 // Create an inspector panel with a horizontal layout.
 var inspector = ui.Panel({
     layout: ui.Panel.Layout.flow('vertical'),
@@ -354,7 +269,7 @@ inspector.add(
     ui.Label({
         value: 'Click on a location to see greenness and temperature trends',
         style: {
-            fontSize: '1.6vmin',
+            fontSize: '12px', // '1.6vmin',
             fontWeight: 'bold',
             textAlign: 'center',
             margin: '0px 0px 0px 0px'
@@ -427,9 +342,9 @@ var color_pal = {palette: ['#f73593CC', '#a53593CC', '#403593CC', '#f78fb6CC', '
 var dataInfo = {
   
     'vgt': {
-        name: 'Vegetation greenness trend',
+        name: "Trend in 'degree of greenness'",
         desc: 'Statistic describing an increasing or decreasing trend '+
-        'in greenness between 1990 and 2020 ',
+        'in greenness (defined using Landsat NDVI data) between 1990 and 2020',
         img: NDVI1yrTSTrends.select('b3'),
         type: 'image_cont',
         vis: {
@@ -441,8 +356,8 @@ var dataInfo = {
     },
     'lstt': {
         name: 'Land surface temperature trend',
-        desc: 'Statistic describing the strength of either an increasing or decreasing ' +
-         'trend in surface temperature between 1990 and 2020 ',
+        desc: 'Statistic describing an increasing or decreasing ' +
+         'trend in surface temperature (from Landsat data) between 1990 and 2020',
         img: LST1yrTSTrends.select('b3'),
         type: 'image_cont',
         vis: {
@@ -453,8 +368,8 @@ var dataInfo = {
         }
     },
     'cls': {
-        name: 'Machine learning green space classification',
-        desc: 'Identified green, water, and urban spaces in 2020',
+        name: 'Green space classification',
+        desc: 'Classified as green space, water, or urban area in 2020 using machine learning',
         img: GreenSpaceClassified,
         type: 'image_class',
         vis: {
@@ -466,16 +381,18 @@ var dataInfo = {
         }
     },
     'ndvi_dr': {
-      name: 'Greenness & displacement risk',
-      desc: 'Census tract greenness compared to displacement risk in 2019 at the census tract level',
+      name: 'Degree of greenness & displacement risk',
+      desc: 'Degree of greenness compared to level of displacement risk in 2019 ' +
+        '(from Estimated Displacement Risk model) at the census tract level',
       img: tracts,
       type: 'vec',
       style: color_dict,
       vis: color_pal
     },  
     'ndvi_sc': {
-      name: 'Greenness & social vulnerability',
-      desc: 'Census tract greenness (2019) compared to level of social vulnerability (2018) at the census tract level',
+      name: 'Degree of greenness & social vulnerability',
+      desc: "Degree of greenness (2019) compared to CDC's 2018 Social " +
+        "Vulnerability Index at the census tract level",
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -483,7 +400,8 @@ var dataInfo = {
     },
    'lst_dr': {
       name: 'Land surface temperature & displacement risk',
-      desc: 'Land surface temperature (2019) compared to compared to displacement risk in 2019 at the census tract level',
+      desc: 'Land surface temperature (2019) compared to compared to displacement ' +
+        'risk in 2019 (from Estimated Displacement Risk model) at the census tract level',
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -491,23 +409,26 @@ var dataInfo = {
     },  
    'lst_soc': {
       name: 'Land surface temperature & social vulnerability',
-      desc: 'Land surface temperature (2019) compared to level of social vulnerability (2018) at the census tract level',
+      desc: "Land surface temperature (2019) compared to CDC's 2018 Social " +
+        "Vulnerability Index at the census tract level",
       img: tracts,
       type: 'vec',
       style: color_dict,
       vis: color_pal
     },
    'pctgreen_dr': {
-      name: 'Percent green space & displacement risk',
-      desc: 'Share of tract that is green space compared to displacement risk in 2019 at the census tract level',
+      name: 'Percent classified green space & displacement risk',
+      desc: 'Share of tract that is classified as green space compared to displacement ' +
+      'risk in 2019 (from Estimated Displacement Risk model) at the census tract level',
       img: tracts,
       type: 'vec',
       style: color_dict,
       vis: color_pal
     },  
    'pctgreen_soc': {
-      name: 'Percent green space & social vulnerability',
-      desc: 'Share of tract that is green space (2019) compared to level of social vulnerability (2018) at the census tract level',
+      name: 'Percent classified green space & social vulnerability',
+      desc: "Share of tract that is classified as green space (2019) compared to CDC's 2018 Social " +
+        "Vulnerability Index at the census tract level",
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -515,20 +436,22 @@ var dataInfo = {
     },
    'lst_pricechange': {
       name: 'Land surface temperature trend & housing price trend',
-      desc: 'Rate of change in land surface temperature (1990 - 2019) & percent change in yearly average housing price (2000 - 2020) at the zip code level',
+      desc: 'Rate of change in land surface temperature (1990 - 2019) & percent change ' +
+        'in yearly average housing price (2000 - 2020) at the zip code level',
       img: zips,
       type: 'vec',
       style: color_dict,
       vis: color_pal
     },
    'ndvi_pricechange': {
-      name: 'Greenness trend & housing price trend',
-      desc: 'Rate of change in greenness (1990 - 2019) & percent change in yearly average housing price (2000 - 2020) at the zip code level',
+      name: 'Degree of greenness trend & housing price trend',
+      desc: 'Rate of change in greenness (1990 - 2019) & percent change in yearly average ' +
+        'housing price (2000 - 2020) at the zip code level',
       img: zips,
       type: 'vec',
       style: color_dict,
       vis: color_pal
-    }    
+    }
 };
 
 // Register a callback on the default map to be invoked when the map is clicked.
@@ -575,7 +498,7 @@ var ImClick =  function(coords) {
             value: 'Loading...',
             style: {
                 color: 'gray',
-                fontSize: '1.7vmin',
+                fontSize: '14px', // '1.7vmin',
                 fontWeight: 'normal',
                 textAlign: 'center',
                 margin: '0px 0px 0px 0px'
@@ -640,7 +563,7 @@ var ImClick =  function(coords) {
             .setChartType('LineChart');
         NDVILSTChart.setOptions({
             // Set the title of the chart.
-            title: 'Greenness & land surface temperature',
+            title: 'Degree of greenness & land surface temperature',
             series: {
                  0: {
                      targetAxisIndex: 0 ,
@@ -753,7 +676,7 @@ var ImClick =  function(coords) {
         ui.Label({
             value: 'Click on another location...',
             style: {
-                fontSize: '1.7vmin',
+                fontSize: '14px', // '1.7vmin',
                 fontWeight: 'bold',
                 textAlign: 'center',
                 margin: '0px 0px 0px 0px'
@@ -764,10 +687,12 @@ var ImClick =  function(coords) {
 
 var legend = ui.Panel({
     style: {
-        position: 'bottom-left',
-        width: '24%'
+        width: '30%'
     }
 });
+
+// Add the main panel to the UI root.
+ui.root.insert(1, legend);
 
 // Create a layer selector that dictates which layer is visible on the map.
 // The list of possible layers are generated from the data info provided above.
@@ -780,7 +705,7 @@ items.push({value: 'none', label: 'Remove all'});
 var select = ui.Select({
     items: items,
     value: items[0].value,
-    style: {margin: '8px 0px'}
+    style: { margin: '8px 8px' }
 });
 
 // Redraw function is called when the user changes the selected layer.
@@ -796,14 +721,81 @@ function redraw(layer) {
     legend
     .add(
         ui.Label({
+            value: 'Where the Grass Grows Greener: The Impacts of ' +
+            'Urban Greening on Housing Prices and Neighborhood Stability',
+            style: {
+                fontSize: '20px', // '1vw',
+                fontWeight: 'bold'
+            },
+        })
+    )
+    .add(
+        ui.Label({
+            value: 'This webtool shows trends in urban greenery and land ' +
+            'surface temperature in the San Francisco Bay Area between 1990 ' +
+            'and 2020. It also illustrates spatial relationships with ' +
+            'socioeconomic indicators such as housing prices and displacement risk. ' +
+            "Note that the vector layers include only census tracts or zip codes " +
+            "that are located in areas designated as 'urban'."
+            ,
+            style: {
+                fontSize: '14px', // '.9vw',
+                fontWeight: 'normal'
+            },
+        })
+    )
+    .add(
+        ui.Label({
+            value: 'Click here to read more about the data and our methodology.',
+            // Methodology doc: https://docs.google.com/document/d/1z7E5YeSs4yCnBf2y1_TTxLfbIHANdyLbcvNwNI6V3WA/edit
+            style: {
+                color: 'black',
+                fontSize: '12px', // '.9vw',
+                fontWeight: 'bold',
+                textAlign: 'left'
+            },
+            targetUrl: 'https://github.com/erthromero/EEJWebApp'
+        })
+    )
+    .add(
+        ui.Label({
+            value: 'Created by Eric Romero and Julia Greenberg',
+            style: {
+                color: 'black',
+                fontSize: '12px', // '.8vw',
+                fontWeight: 'bold',
+                textAlign: 'left'
+            }
+        })
+    )
+    .add(
+        ui.Label({
+            value: 'Funding from the NASA Equity and Environmental Justice program, Data Integration Project, grant no. 80NSSC22K1699',
+            style: {
+                color: 'black',
+                fontSize: '12px', // '.8vw',
+                textAlign: 'left'
+            },
+        }) 
+    )
+    .add(
+      ui.Panel({
+        style: {
+          backgroundColor: 'gray', // Color of the line
+          height: '2px',            // Height of the line
+          margin: '8px 8px 8px 8px'           // Margin for spacing
+        }
+      })
+    )
+    .add(
+        ui.Label({
             value: 'Choose display layer:',
             style: {
                 fontSize: '14px',
                 fontWeight: 'bold',
-                textAlign: 'left',
-                margin: '4px 0px'
+                textAlign: 'left'
             },
-        })
+        })       
     )
     .add(select);
 
@@ -838,7 +830,7 @@ function redraw(layer) {
                 // Stretch color bar horizontally.
                 stretch: 'horizontal',
                 // No margin for color bar.
-                margin: '0px 0px',
+                margin: '8px 8px',
                 // Max height of color bar.
                 maxHeight: '10%',
                 // Width of color bar.
@@ -850,15 +842,15 @@ function redraw(layer) {
         var legendLabels = ui.Panel({
             widgets: [
                 ui.Label(vis.min, {
-                    margin: '0px 0px'
+                    margin: '8px 8px'
                 }),
                 ui.Label('', {
-                    margin: '0px 0px',
+                    margin: '8px 8px',
                     textAlign: 'center',
                     stretch: 'horizontal'
                 }),
                 ui.Label(vis.max, {
-                    margin: '0px 0px'
+                    margin: '8px 8px'
                 }),
             ],
             layout: ui.Panel.Layout.flow('horizontal')
@@ -869,10 +861,10 @@ function redraw(layer) {
             ui.Label({
                 value: info.desc,
                 style: {
-                    fontSize: '14px',
+                    fontSize: '12px',
                     textAlign: 'left',
-                    padding: '0px 0px 4px 0px',
-                    margin: '8px 0px'
+                    // padding: '0px 8px 4px 8px'
+                    margin: '8px 8px'
                 },
             })
         );
@@ -897,14 +889,14 @@ function redraw(layer) {
             backgroundColor: color,
             // Use padding to give the box height and width.
             padding: '8px',
-            margin: '0 0 4px 0'
+            margin: '2px 8px'
           }
         });
    
         // Create the label filled with the description text.
         var description = ui.Label({
           value: name,
-          style: {margin: '0 0 4px 6px'}
+          style: {margin: '2px 8px'}
         });
  
       // return the panel
@@ -920,8 +912,7 @@ function redraw(layer) {
                 style: {
                     fontSize: '14px',
                     textAlign: 'left',
-                    padding: '0px 0px 4px 0px',
-                    margin: '8px 0px'
+                    margin: '8px 8px'
                 },
             })
         );
@@ -954,7 +945,7 @@ function redraw(layer) {
       for (var i = 0; i < 3; i++) {
         var rowPanel = ui.Panel({
           layout: ui.Panel.Layout.Flow('horizontal'),
-          style: { margin: '0' }
+          style: { margin: '0px 0px 0px 8px' }
         });
         for (var j = 0; j < 3; j++) {
           var index = i * 3 + j;
@@ -979,11 +970,11 @@ function redraw(layer) {
       }   
     
     if (layer == 'ndvi_dr') {
-      var lab1 = 'Greenness'
+      var lab1 = 'Degree of\n   greenness'
       var lab2 = 'Displacement\n   risk' 
       
     } else if (layer == 'ndvi_sc') {
-        var lab1 = 'Greenness'
+        var lab1 = 'Degree of\n   greenness'
         var lab2 = 'Social\n   vulnerability'  
     
     } else if (layer == 'lst_dr') {
@@ -1003,7 +994,7 @@ function redraw(layer) {
         var lab2 = 'Social\n   vulnerability'
         
     } else if (layer == 'ndvi_pricechange') {
-        var lab1 = 'Greenness\n     increase'
+        var lab1 = 'Degree of greenness\n     increase'
         var lab2 = 'Housing price\n   increase'
         
     } else if (layer == 'lst_pricechange') {
@@ -1035,8 +1026,8 @@ function redraw(layer) {
         style: {
           fontSize: '14px',
           textAlign: 'left',
-          padding: '0px 0px 4px 0px',
-          margin: '8px 0px'
+          // padding: '0px 0px 4px 0px',
+          margin: '8px 8px'
         }
       })
     );    
@@ -1149,6 +1140,3 @@ select.onChange(redraw);
 
 // Invoke the redraw function at start up to initialize the exceedance map.
 redraw('vgt');
-
-// Add legend to map.
-map.add(legend);
