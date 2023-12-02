@@ -267,9 +267,9 @@ var widget1 = ui.Panel({style: {position: 'bottom-left'}});
 // Add a label to the panel.
 inspector.add(
     ui.Label({
-        value: 'Click on a location to see greenness and temperature trends',
+        value: 'Click on a location to see greenness and temperature trends.',
         style: {
-            fontSize: '12px', // '1.6vmin',
+            fontSize: '16px', // '1.6vmin',
             fontWeight: 'bold',
             textAlign: 'center',
             margin: '0px 0px 0px 0px'
@@ -302,7 +302,9 @@ var LST1yrTS = LST1yrTS.map(returnYrProp);
 var LST1yrTS = LST1yrTS.map(renameBandsUniversal); // remove funky chart legend formatting
 var LST1yrTS = LST1yrTS.map(function(img){
   return img.subtract(273.15);
-}); // convert kelvin to C
+}); 
+
+// convert kelvin to C
 
 // NOTE (Eric): Bring in linear trend rasters 
 var NDVI1yrTSTrends = ee.Image('projects/nasa-eej/assets/NDVI1yrTimeSeries1990to2020LinearTrendStats');
@@ -344,7 +346,8 @@ var dataInfo = {
     'vgt': {
         name: "Trend in 'degree of greenness'",
         desc: 'Statistic describing an increasing or decreasing trend '+
-        'in greenness (defined using Landsat NDVI data) between 1990 and 2020',
+        ' in greenness defined using the normalized difference vegetation index (NDVI; source: Landsat)'+
+        ' between 1990 and 2020. NDVI is a unitless measure of vegetation health between -1 and 1.',
         img: NDVI1yrTSTrends.select('b3'),
         type: 'image_cont',
         vis: {
@@ -357,7 +360,8 @@ var dataInfo = {
     'lstt': {
         name: 'Land surface temperature trend',
         desc: 'Statistic describing an increasing or decreasing ' +
-         'trend in surface temperature (from Landsat data) between 1990 and 2020',
+         'trend in land surface temperature (LST; source: Landsat) between 1990 and 2020.' +
+         ' Units of LST are in °C.',
         img: LST1yrTSTrends.select('b3'),
         type: 'image_cont',
         vis: {
@@ -369,7 +373,7 @@ var dataInfo = {
     },
     'cls': {
         name: 'Green space classification',
-        desc: 'Classified as green space, water, or urban area in 2020 using machine learning',
+        desc: 'Areas classified as green space, water, or urban areas in 2020 using machine learning',
         img: GreenSpaceClassified,
         type: 'image_class',
         vis: {
@@ -383,7 +387,8 @@ var dataInfo = {
     'ndvi_dr': {
       name: 'Degree of greenness & displacement risk',
       desc: 'Degree of greenness compared to level of displacement risk in 2019 ' +
-        '(from Estimated Displacement Risk model) at the census tract level',
+        '(from Estimated Displacement Risk model) at the census tract level. Degree of greenness defined using the median normalized difference vegetation index (NDVI; source: Landsat).'+
+        ' NDVI is a unitless measure of vegetation health between -1 and 1.',
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -392,16 +397,27 @@ var dataInfo = {
     'ndvi_sc': {
       name: 'Degree of greenness & social vulnerability',
       desc: "Degree of greenness (2019) compared to CDC's 2018 Social " +
-        "Vulnerability Index at the census tract level",
+        'Vulnerability Index at the census tract level. Degree of greenness defined using the median normalized difference vegetation index (NDVI; source: Landsat).'+
+        ' NDVI is a unitless measure of vegetation health between -1 and 1.',
       img: tracts,
+      type: 'vec',
+      style: color_dict,
+      vis: color_pal
+    },
+   'ndvi_pricechange': {
+      name: 'Degree of greenness trend & housing price trend',
+      desc: 'Rate of change in greenness (1990 - 2019) & percent change in yearly average ' +
+        'housing price (2000 - 2020) at the zip code level. Degree of greenness defined using the median normalized difference vegetation index (NDVI; source: Landsat).'+
+        ' NDVI is a unitless measure of vegetation health between -1 and 1.',
+      img: zips,
       type: 'vec',
       style: color_dict,
       vis: color_pal
     },
    'lst_dr': {
       name: 'Land surface temperature & displacement risk',
-      desc: 'Land surface temperature (2019) compared to compared to displacement ' +
-        'risk in 2019 (from Estimated Displacement Risk model) at the census tract level',
+      desc: 'Median land surface temperature (LST; source: Landsat) compared to displacement ' +
+        'risk in 2019 (from Estimated Displacement Risk model) at the census tract level. Units of LST are in °C.',
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -409,9 +425,18 @@ var dataInfo = {
     },  
    'lst_soc': {
       name: 'Land surface temperature & social vulnerability',
-      desc: "Land surface temperature (2019) compared to CDC's 2018 Social " +
-        "Vulnerability Index at the census tract level",
+      desc: "Median land surface temperature (LST; source: Landsat) in 2019 compared to CDC's 2018 Social " +
+        "Vulnerability Index at the census tract level." + ' Units of LST are in °C.',
       img: tracts,
+      type: 'vec',
+      style: color_dict,
+      vis: color_pal
+    },
+   'lst_pricechange': {
+      name: 'Land surface temperature trend & housing price trend',
+      desc: 'Rate of change in land surface temperature (LST; source: Landsat) from 1990 to 2019 & percent change ' +
+        'in yearly average housing price from 2000 to 2020 at the zip code level.',
+      img: zips,
       type: 'vec',
       style: color_dict,
       vis: color_pal
@@ -427,27 +452,9 @@ var dataInfo = {
     },  
    'pctgreen_soc': {
       name: 'Percent classified green space & social vulnerability',
-      desc: "Share of tract that is classified as green space (2019) compared to CDC's 2018 Social " +
+      desc: "Share of tract that is classified as green space in 2019 compared to CDC's 2018 Social " +
         "Vulnerability Index at the census tract level",
       img: tracts,
-      type: 'vec',
-      style: color_dict,
-      vis: color_pal
-    },
-   'lst_pricechange': {
-      name: 'Land surface temperature trend & housing price trend',
-      desc: 'Rate of change in land surface temperature (1990 - 2019) & percent change ' +
-        'in yearly average housing price (2000 - 2020) at the zip code level',
-      img: zips,
-      type: 'vec',
-      style: color_dict,
-      vis: color_pal
-    },
-   'ndvi_pricechange': {
-      name: 'Degree of greenness trend & housing price trend',
-      desc: 'Rate of change in greenness (1990 - 2019) & percent change in yearly average ' +
-        'housing price (2000 - 2020) at the zip code level',
-      img: zips,
       type: 'vec',
       style: color_dict,
       vis: color_pal
@@ -682,8 +689,7 @@ var ImClick =  function(coords) {
   
         // Add the close button to the chart panel
         widget1.add(buttonPanel);
-    
-
+        
     } else {
         
         // Add a blank label widget if there is no data.
@@ -723,7 +729,7 @@ var ImClick =  function(coords) {
         ui.Label({
             value: 'Click on another location...',
             style: {
-                fontSize: '14px', // '1.7vmin',
+                fontSize: '16px', // '1.7vmin',
                 fontWeight: 'bold',
                 textAlign: 'center',
                 margin: '0px 0px 0px 0px'
