@@ -269,7 +269,7 @@ inspector.add(
     ui.Label({
         value: 'Click on a location to see greenness and temperature trends.',
         style: {
-            fontSize: '16px', // '1.6vmin',
+            fontSize: '12px', // '1.6vmin',
             fontWeight: 'bold',
             textAlign: 'center',
             margin: '0px 0px 0px 0px'
@@ -360,8 +360,8 @@ var dataInfo = {
     'lstt': {
         name: 'Land surface temperature trend',
         desc: 'Statistic describing an increasing or decreasing ' +
-         'trend in land surface temperature (LST; source: Landsat) between 1990 and 2020.' +
-         ' Units of LST are in °C.',
+         'trend in land surface temperature (LST; source: Landsat) between 1990 and 2020. ' +
+         'LST is measured in °C.',
         img: LST1yrTSTrends.select('b3'),
         type: 'image_cont',
         vis: {
@@ -373,7 +373,7 @@ var dataInfo = {
     },
     'cls': {
         name: 'Green space classification',
-        desc: 'Areas classified as green space, water, or urban areas in 2020 using machine learning',
+        desc: 'Areas classified as green space, water, or urban areas in 2020 using machine learning.',
         img: GreenSpaceClassified,
         type: 'image_class',
         vis: {
@@ -387,8 +387,9 @@ var dataInfo = {
     'ndvi_dr': {
       name: 'Degree of greenness & displacement risk',
       desc: 'Degree of greenness compared to level of displacement risk in 2019 ' +
-        '(from Estimated Displacement Risk model) at the census tract level. Degree of greenness defined using the median normalized difference vegetation index (NDVI; source: Landsat).'+
-        ' NDVI is a unitless measure of vegetation health between -1 and 1.',
+        '(from Estimated Displacement Risk model) at the census tract level. Degree of ' +
+        'greenness is defined using the median normalized difference vegetation index (NDVI; source: Landsat). ' +
+        'NDVI is a unitless measure of vegetation health between -1 and 1.',
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -397,8 +398,9 @@ var dataInfo = {
     'ndvi_sc': {
       name: 'Degree of greenness & social vulnerability',
       desc: "Degree of greenness (2019) compared to CDC's 2018 Social " +
-        'Vulnerability Index at the census tract level. Degree of greenness defined using the median normalized difference vegetation index (NDVI; source: Landsat).'+
-        ' NDVI is a unitless measure of vegetation health between -1 and 1.',
+        'Vulnerability Index at the census tract level. Degree of greenness is defined using the median ' +
+        'normalized difference vegetation index (NDVI; source: Landsat). NDVI is a unitless measure of ' +
+        'vegetation health between -1 and 1.',
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -407,8 +409,10 @@ var dataInfo = {
    'ndvi_pricechange': {
       name: 'Degree of greenness trend & housing price trend',
       desc: 'Rate of change in greenness (1990 - 2019) & percent change in yearly average ' +
-        'housing price (2000 - 2020) at the zip code level. Degree of greenness defined using the median normalized difference vegetation index (NDVI; source: Landsat).'+
-        ' NDVI is a unitless measure of vegetation health between -1 and 1.',
+        'housing price (2000 - 2020) at the zip code level. Degree of greenness is defined using the ' +
+        'median normalized difference vegetation index (NDVI; source: Landsat). '+
+        'NDVI is a unitless measure of vegetation health between -1 and 1. Only zip codes with statistically ' +
+        'significant (p < 0.05) greenness trends are shown.',
       img: zips,
       type: 'vec',
       style: color_dict,
@@ -417,7 +421,7 @@ var dataInfo = {
    'lst_dr': {
       name: 'Land surface temperature & displacement risk',
       desc: 'Median land surface temperature (LST; source: Landsat) compared to displacement ' +
-        'risk in 2019 (from Estimated Displacement Risk model) at the census tract level. Units of LST are in °C.',
+        'risk in 2019 (from Estimated Displacement Risk model) at the census tract level.',
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -426,7 +430,7 @@ var dataInfo = {
    'lst_soc': {
       name: 'Land surface temperature & social vulnerability',
       desc: "Median land surface temperature (LST; source: Landsat) in 2019 compared to CDC's 2018 Social " +
-        "Vulnerability Index at the census tract level." + ' Units of LST are in °C.',
+        'Vulnerability Index at the census tract level.',
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -434,8 +438,9 @@ var dataInfo = {
     },
    'lst_pricechange': {
       name: 'Land surface temperature trend & housing price trend',
-      desc: 'Rate of change in land surface temperature (LST; source: Landsat) from 1990 to 2019 & percent change ' +
-        'in yearly average housing price from 2000 to 2020 at the zip code level.',
+      desc: 'Rate of change in land surface temperature (LST; source: Landsat) from 1990 to 2019 compared to percent change ' +
+        'in yearly average housing price from 2000 to 2020 at the zip code level. Only zip codes with statistically ' +
+        'significant (p < 0.05) land surface temperature trends are shown.',
       img: zips,
       type: 'vec',
       style: color_dict,
@@ -444,7 +449,7 @@ var dataInfo = {
    'pctgreen_dr': {
       name: 'Percent classified green space & displacement risk',
       desc: 'Share of tract that is classified as green space compared to displacement ' +
-      'risk in 2019 (from Estimated Displacement Risk model) at the census tract level',
+      'risk in 2019 (from Estimated Displacement Risk model) at the census tract level.',
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -453,7 +458,7 @@ var dataInfo = {
    'pctgreen_soc': {
       name: 'Percent classified green space & social vulnerability',
       desc: "Share of tract that is classified as green space in 2019 compared to CDC's 2018 Social " +
-        "Vulnerability Index at the census tract level",
+        "Vulnerability Index at the census tract level.",
       img: tracts,
       type: 'vec',
       style: color_dict,
@@ -505,7 +510,7 @@ var ImClick =  function(coords) {
             value: 'Loading...',
             style: {
                 color: 'gray',
-                fontSize: '14px', // '1.7vmin',
+                fontSize: '12px', // '1.7vmin',
                 fontWeight: 'normal',
                 textAlign: 'center',
                 margin: '0px 0px 0px 0px'
@@ -758,7 +763,7 @@ items.push({value: 'none', label: 'Remove all'});
 var select = ui.Select({
     items: items,
     value: items[0].value,
-    style: { margin: '8px 8px' }
+    style: { margin: '20px 20px' }
 });
 
 // Redraw function is called when the user changes the selected layer.
@@ -777,8 +782,12 @@ function redraw(layer) {
             value: 'Where the Grass Grows Greener: The Impacts of ' +
             'Urban Greening on Housing Prices and Neighborhood Stability',
             style: {
-                fontSize: '20px', // '1vw',
-                fontWeight: 'bold'
+                fontSize: '14px', // '1vw',
+                fontWeight: 'bold',
+                backgroundColor: '#ddebe4',
+                padding: '5px 5px 5px 5px',
+                textAlign: 'center',
+                margin: '10px 20px 10px 20px'
             },
         })
     )
@@ -792,8 +801,9 @@ function redraw(layer) {
             "that are located in areas designated as 'urban'."
             ,
             style: {
-                fontSize: '14px', // '.9vw',
-                fontWeight: 'normal'
+                fontSize: '13px', // '.9vw',
+                fontWeight: 'normal',
+                margin: '10px 20px 10px 20px'
             },
         })
     )
@@ -805,7 +815,8 @@ function redraw(layer) {
                 color: 'black',
                 fontSize: '12px', // '.9vw',
                 fontWeight: 'bold',
-                textAlign: 'left'
+                textAlign: 'left',
+                margin: '10px 20px 2px 20px'
             },
             targetUrl: 'https://github.com/erthromero/EEJWebApp'
         })
@@ -817,7 +828,8 @@ function redraw(layer) {
                 color: 'black',
                 fontSize: '12px', // '.8vw',
                 fontWeight: 'bold',
-                textAlign: 'left'
+                textAlign: 'left',
+                margin: '10px 20px 2px 20px'
             }
         })
     )
@@ -827,7 +839,8 @@ function redraw(layer) {
             style: {
                 color: 'black',
                 fontSize: '12px', // '.8vw',
-                textAlign: 'left'
+                textAlign: 'left',
+                margin: '10px 20px 10px 20px'
             },
         }) 
     )
@@ -836,7 +849,7 @@ function redraw(layer) {
         style: {
           backgroundColor: 'gray', // Color of the line
           height: '2px',            // Height of the line
-          margin: '8px 8px 8px 8px'           // Margin for spacing
+          margin: '8px 20px 8px 20px'     // Margin for spacing
         }
       })
     )
@@ -844,9 +857,10 @@ function redraw(layer) {
         ui.Label({
             value: 'Choose display layer:',
             style: {
-                fontSize: '14px',
+                fontSize: '13px',
                 fontWeight: 'bold',
-                textAlign: 'left'
+                textAlign: 'left',
+                margin: '10px 20px 0px 20px'
             },
         })       
     )
@@ -882,28 +896,28 @@ function redraw(layer) {
             style: {
                 // Stretch color bar horizontally.
                 stretch: 'horizontal',
-                // No margin for color bar.
-                margin: '8px 8px',
+                // Margin of color bar.
+                margin: '0px 20px 0px 20px',
                 // Max height of color bar.
                 maxHeight: '10%',
                 // Width of color bar.
-                width: '100%'
+                width: '91%'
             },
         });
 
-        // Create a panel with three numbers for the legend.
+        // Create a panel with two numbers for the legend.
         var legendLabels = ui.Panel({
             widgets: [
                 ui.Label(vis.min, {
-                    margin: '8px 8px'
+                    margin: '8px 20px 8px 20px'
                 }),
                 ui.Label('', {
-                    margin: '8px 8px',
+                    margin: '8px 20px 8px 20px',
                     textAlign: 'center',
                     stretch: 'horizontal'
                 }),
                 ui.Label(vis.max, {
-                    margin: '8px 8px'
+                    margin: '8px 20px 8px 20px'
                 }),
             ],
             layout: ui.Panel.Layout.flow('horizontal')
@@ -914,10 +928,10 @@ function redraw(layer) {
             ui.Label({
                 value: info.desc,
                 style: {
-                    fontSize: '12px',
+                    fontSize: '13px',
                     textAlign: 'left',
                     // padding: '0px 8px 4px 8px'
-                    margin: '8px 8px'
+                    margin: '0px 20px 20px 20px'
                 },
             })
         );
@@ -942,14 +956,14 @@ function redraw(layer) {
             backgroundColor: color,
             // Use padding to give the box height and width.
             padding: '8px',
-            margin: '2px 8px'
+            margin: '0px 10px 10px 20px'
           }
         });
    
         // Create the label filled with the description text.
         var description = ui.Label({
           value: name,
-          style: {margin: '2px 8px'}
+          style: {margin: '0px 10px 10px 20px'}
         });
  
       // return the panel
@@ -963,9 +977,9 @@ function redraw(layer) {
             ui.Label({
                 value: info.desc,
                 style: {
-                    fontSize: '14px',
+                    fontSize: '13px',
                     textAlign: 'left',
-                    margin: '8px 8px'
+                    margin: '0px 20px 20px 20px'
                 },
             })
         );
@@ -998,7 +1012,7 @@ function redraw(layer) {
       for (var i = 0; i < 3; i++) {
         var rowPanel = ui.Panel({
           layout: ui.Panel.Layout.Flow('horizontal'),
-          style: { margin: '0px 0px 0px 8px' }
+          style: { margin: '0px 0px 0px 0px' }
         });
         for (var j = 0; j < 3; j++) {
           var index = i * 3 + j;
@@ -1023,42 +1037,58 @@ function redraw(layer) {
       }   
     
     if (layer == 'ndvi_dr') {
-      var lab1 = 'Degree of\n   greenness'
+      var lab1 = 'Degree of\n     greenness'
       var lab2 = 'Displacement\n   risk' 
+      var threshold = 'Degree of greenness:\n17.78 °C, 34.5 °C, 37.17 °C, 43.47 °C\n\nDisplacement risk:\nsee methodology'
       
     } else if (layer == 'ndvi_sc') {
-        var lab1 = 'Degree of\n   greenness'
-        var lab2 = 'Social\n   vulnerability'  
+        var lab1 = 'Degree of\n     greenness'
+        var lab2 = 'Social\n   vulnerability' 
+        var threshold = 'Degree of greenness:\n17.78 °C, 34.5 °C, 37.17 °C, 43.47 °C\n\nSocial Vulnerability Index:\n0, 0.21, 0.48, 1'
     
     } else if (layer == 'lst_dr') {
         var lab1 = 'Land surface\n     temperature'
-        var lab2 = 'Displacement\n   risk'      
+        var lab2 = 'Displacement\n   risk'  
+        var threshold = 'Land surface temperature:\n17.78 °C, 34.5 °C, 37.17 °C, 43.47 °C\n\nDisplacement risk:\nsee methodology'
     
     } else if (layer == 'lst_soc') {
         var lab1 = 'Land surface\n     temperature'
         var lab2 = 'Social\n   vulnerability'
+        var threshold = 'Land surface temperature:\n17.78 °C, 34.5 °C, 37.17 °C, 43.47 °C\n\nSocial Vulnerability Index:\n0, 0.21, 0.48, 1'
     
     } else if (layer == 'pctgreen_dr') {
         var lab1 = 'Percent\n     green space'
         var lab2 = 'Displacement\n   risk'    
+        var threshold = 'Percent green space:\n0%, 11%, 33%, 98%\n\nDisplacement risk:\nsee methodology'
         
     } else if (layer == 'pctgreen_soc') {
         var lab1 = 'Percent\n     green space'
         var lab2 = 'Social\n   vulnerability'
+        var threshold = 'Percent green space:\n0%, 11%, 33%, 98%\n\nSocial Vulnerability Index:\n0, 0.21, 0.48, 1'
         
     } else if (layer == 'ndvi_pricechange') {
         var lab1 = 'Degree of greenness\n     increase'
         var lab2 = 'Housing price\n   increase'
+        var threshold = 'Degree of greenness increase:\n0.0004, 0.0018, 0.0027, 0.0076\n\nHousing price increase:\n89%, 143%, 177%, 506%'
         
     } else if (layer == 'lst_pricechange') {
         var lab1 = 'Land surface\n     temperature\n     increase'
         var lab2 = 'Housing price\n   increase'
+        var threshold = 'Land surface temperature increase:\n0.11, 0.26, 0.32, 0.47\n\nHousing price increase:\n89%, 143%, 177%, 506%'
         
     }
     
     // Create labels
-    var Label1 = ui.Label('\u2192 ' + lab1, {whiteSpace: 'pre'});
-    var Label2 = ui.Label('\u2191 ' + lab2, {whiteSpace: 'pre'});
+    var Label1 = ui.Label('\u2192 ' + lab1, {whiteSpace: 'pre', fontSize: '13px'});
+    var Label2 = ui.Label('\u2191 ' + lab2, {whiteSpace: 'pre', fontSize: '13px'});
+    
+    var Threshold_title = ui.Label({
+      value: 'Bin thresholds', 
+      style: {fontWeight: 'bold', fontSize: '12px', backgroundColor: '#ddebe4'}});
+      
+    var Threshold = ui.Label({
+      value: threshold, 
+      style: {fontSize: '12px', whiteSpace: 'pre-wrap', backgroundColor: '#ddebe4'}});
     
     // Create a panel to contain the legend square and labels
     
@@ -1069,23 +1099,35 @@ function redraw(layer) {
     
     var containerPanel2 = ui.Panel({
       widgets: [containerPanel1, Label1],
-      layout: ui.Panel.Layout.Flow('vertical')
-    });      
+      layout: ui.Panel.Layout.Flow('vertical'),
+      style: {margin: '0px 20px 0px 20px'}
+    });   
+    
+    var Both_Threshold = ui.Panel({
+      widgets: [Threshold_title, Threshold],
+      layout: ui.Panel.Layout.Flow('vertical'),
+      style: {backgroundColor: '#ddebe4', margin: '0px 8px 15px 8px'}
+    });   
+    
+    var containerPanel3 = ui.Panel({
+      widgets: [containerPanel2, Both_Threshold],
+      layout: ui.Panel.Layout.Flow('horizontal')
+    });        
     
     // Add label to legend.
     legend.add(
       ui.Label({
         value: info.desc,
         style: {
-          fontSize: '14px',
+          fontSize: '13px',
           textAlign: 'left',
           // padding: '0px 0px 4px 0px',
-          margin: '8px 8px'
+          margin: '0px 20px 20px 20px'
         }
       })
     );    
     
-    legend.add(containerPanel2)
+    legend.add(containerPanel3)
     }
       
 
