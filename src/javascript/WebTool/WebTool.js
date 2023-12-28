@@ -963,7 +963,7 @@ function redraw(layer) {
         // Create the label filled with the description text.
         var description = ui.Label({
           value: name,
-          style: {margin: '0px 10px 10px 20px'}
+          style: {fontSize: '13px', margin: '0px 10px 10px 0px'}
         });
  
       // return the panel
