@@ -1039,12 +1039,12 @@ function redraw(layer) {
     if (layer == 'ndvi_dr') {
       var lab1 = 'Degree of\n     greenness'
       var lab2 = 'Displacement\n   risk' 
-      var threshold = 'Degree of greenness:\n17.78 °C, 34.5 °C, 37.17 °C, 43.47 °C\n\nDisplacement risk:\nsee methodology'
+      var threshold = 'Degree of greenness:\n-0.1, 0.26, 0.34, 0.82\n\nDisplacement risk:\nsee methodology'
       
     } else if (layer == 'ndvi_sc') {
         var lab1 = 'Degree of\n     greenness'
         var lab2 = 'Social\n   vulnerability' 
-        var threshold = 'Degree of greenness:\n17.78 °C, 34.5 °C, 37.17 °C, 43.47 °C\n\nSocial Vulnerability Index:\n0, 0.21, 0.48, 1'
+        var threshold = 'Degree of greenness:\n-0.1, 0.26, 0.34, 0.82\n\nSocial Vulnerability Index:\n0, 0.21, 0.48, 1'
     
     } else if (layer == 'lst_dr') {
         var lab1 = 'Land surface\n     temperature'
@@ -1059,12 +1059,12 @@ function redraw(layer) {
     } else if (layer == 'pctgreen_dr') {
         var lab1 = 'Percent\n     green space'
         var lab2 = 'Displacement\n   risk'    
-        var threshold = 'Percent green space:\n0%, 11%, 33%, 98%\n\nDisplacement risk:\nsee methodology'
+        var threshold = 'Percent green space:\n0%, 12%, 33%, 98%\n\nDisplacement risk:\nsee methodology'
         
     } else if (layer == 'pctgreen_soc') {
         var lab1 = 'Percent\n     green space'
         var lab2 = 'Social\n   vulnerability'
-        var threshold = 'Percent green space:\n0%, 11%, 33%, 98%\n\nSocial Vulnerability Index:\n0, 0.21, 0.48, 1'
+        var threshold = 'Percent green space:\n0%, 12%, 33%, 98%\n\nSocial Vulnerability Index:\n0, 0.21, 0.48, 1'
         
     } else if (layer == 'ndvi_pricechange') {
         var lab1 = 'Degree of greenness\n     increase'
@@ -1075,7 +1075,6 @@ function redraw(layer) {
         var lab1 = 'Land surface\n     temperature\n     increase'
         var lab2 = 'Housing price\n   increase'
         var threshold = 'Land surface temperature increase:\n0.11, 0.26, 0.32, 0.47\n\nHousing price increase:\n89%, 143%, 177%, 506%'
-        
     }
     
     // Create labels
